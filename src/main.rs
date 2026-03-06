@@ -3,6 +3,7 @@ use clap::Parser;
 use std::io::IsTerminal;
 
 mod ai_config;
+mod api;
 mod assist;
 mod config_cmd;
 mod doctor;
