@@ -9,6 +9,7 @@ mod assist;
 mod config_cmd;
 mod doctor;
 mod init;
+mod mcp;
 mod menu;
 mod profile;
 mod reset;

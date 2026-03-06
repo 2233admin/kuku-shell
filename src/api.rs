@@ -3,6 +3,7 @@
 use crate::profile;
 use anyhow::{bail, Context};
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 #[derive(Deserialize, Clone)]
 pub struct AssistantConfig {
@@ -24,18 +25,29 @@ pub const AVAILABLE_MODELS: &[&str] = &[
     "GLM-4.7",
 ];
 
-#[derive(Serialize)]
-struct ChatRequest {
-    model: String,
-    messages: Vec<Message>,
-    max_tokens: u32,
-    temperature: f32,
-}
-
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Message {
     pub role: String,
-    pub content: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub content: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub tool_calls: Option<Vec<ToolCall>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub tool_call_id: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct ToolCall {
+    pub id: String,
+    #[serde(rename = "type")]
+    pub call_type: String,
+    pub function: FunctionCall,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct FunctionCall {
+    pub name: String,
+    pub arguments: String,
 }
 
 #[derive(Deserialize)]
@@ -115,6 +127,42 @@ pub async fn chat_with_tokens(
     user_msg: &str,
     max_tokens: u32,
 ) -> anyhow::Result<String> {
+    let messages = vec![
+        Message {
+            role: "system".into(),
+            content: Some(system_prompt.into()),
+            tool_calls: None,
+            tool_call_id: None,
+        },
+        Message {
+            role: "user".into(),
+            content: Some(user_msg.into()),
+            tool_calls: None,
+            tool_call_id: None,
+        },
+    ];
+    let resp = raw_chat(config, messages, max_tokens, None).await?;
+    Ok(resp
+        .content
+        .unwrap_or_default())
+}
+
+/// Send chat with tools support. Returns the full response message.
+pub async fn chat_with_tools(
+    config: &AssistantConfig,
+    messages: Vec<Message>,
+    max_tokens: u32,
+    tools: Option<Vec<Value>>,
+) -> anyhow::Result<Message> {
+    raw_chat(config, messages, max_tokens, tools).await
+}
+
+async fn raw_chat(
+    config: &AssistantConfig,
+    messages: Vec<Message>,
+    max_tokens: u32,
+    tools: Option<Vec<Value>>,
+) -> anyhow::Result<Message> {
     let api_key = config
         .api_key
         .as_deref()
@@ -143,21 +191,18 @@ pub async fn chat_with_tokens(
         }
     }
 
-    let body = ChatRequest {
-        model: model.to_string(),
-        messages: vec![
-            Message {
-                role: "system".to_string(),
-                content: system_prompt.to_string(),
-            },
-            Message {
-                role: "user".to_string(),
-                content: user_msg.to_string(),
-            },
-        ],
-        max_tokens,
-        temperature: 0.3,
-    };
+    let mut body = serde_json::json!({
+        "model": model,
+        "messages": messages,
+        "max_tokens": max_tokens,
+        "temperature": 0.3,
+    });
+
+    if let Some(tools) = &tools {
+        if !tools.is_empty() {
+            body["tools"] = Value::Array(tools.clone());
+        }
+    }
 
     let resp = builder.json(&body).send().await.context("send API request")?;
 
@@ -168,9 +213,9 @@ pub async fn chat_with_tokens(
     }
 
     let chat: ChatResponse = resp.json().await.context("parse API response")?;
-    Ok(chat
-        .choices
-        .first()
-        .map(|c| c.message.content.clone())
-        .unwrap_or_default())
+    chat.choices
+        .into_iter()
+        .next()
+        .map(|c| c.message)
+        .context("empty response")
 }

@@ -1,5 +1,6 @@
 //! Environment diagnostics for PowerShell + AI tool health.
 
+use crate::mcp;
 use crate::profile;
 use std::io::Write;
 use std::process::Command;
@@ -37,6 +38,7 @@ pub fn run() -> anyhow::Result<()> {
         check_powershell(),
         check_profile_integration(),
         check_assistant_config(),
+        check_mcp_config(),
         check_tool("starship", "starship --version", "winget install Starship.Starship"),
         check_tool("delta", "delta --version", "winget install dandavison.delta"),
         check_tool("lazygit", "lazygit --version", "winget install jesseduffield.lazygit"),
@@ -175,6 +177,36 @@ fn check_assistant_config() -> Check {
             detail: "API key not set".into(),
             fix: Some("Run `kuku ai` to set API key".into()),
         }
+    }
+}
+
+fn check_mcp_config() -> Check {
+    match mcp::load_mcp_config() {
+        Ok(config) => {
+            let count = config.servers.len();
+            if count == 0 {
+                Check {
+                    name: "MCP Servers",
+                    status: Status::Info,
+                    detail: "没配置 MCP server（可选）".into(),
+                    fix: Some("复制 mcp.example.toml 到 ~/.config/kuku/mcp.toml".into()),
+                }
+            } else {
+                let names: Vec<&String> = config.servers.keys().collect();
+                Check {
+                    name: "MCP Servers",
+                    status: Status::Ok,
+                    detail: format!("{count} 个 server: {}", names.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", ")),
+                    fix: None,
+                }
+            }
+        }
+        Err(e) => Check {
+            name: "MCP Servers",
+            status: Status::Warn,
+            detail: format!("配置解析失败: {e}"),
+            fix: Some("检查 ~/.config/kuku/mcp.toml 格式".into()),
+        },
     }
 }
 
