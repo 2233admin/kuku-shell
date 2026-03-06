@@ -20,27 +20,27 @@ struct MenuItem {
 const MENU: &[MenuItem] = &[
     MenuItem {
         key: "ai",
-        desc: "Manage AI assistant and tool settings",
+        desc: "设置 AI！曼波~",
         cmd: || SubCommand::Ai,
     },
     MenuItem {
         key: "config",
-        desc: "Open ~/.config/kaku/kaku.toml",
+        desc: "看看配置文件~ 曼波曼波",
         cmd: || SubCommand::Config,
     },
     MenuItem {
         key: "init",
-        desc: "Initialize PowerShell profile integration",
+        desc: "钻进 PowerShell！哈基米~",
         cmd: || SubCommand::Init(Default::default()),
     },
     MenuItem {
         key: "doctor",
-        desc: "Run diagnostics for shell and tool health",
+        desc: "闻闻~ 环境体检！",
         cmd: || SubCommand::Doctor,
     },
     MenuItem {
         key: "reset",
-        desc: "Remove kaku PowerShell profile integration",
+        desc: "呜呜...要赶我走吗...",
         cmd: || SubCommand::Reset,
     },
 ];
@@ -97,16 +97,11 @@ fn render(selected: usize) -> anyhow::Result<()> {
 
     let mut buf = String::new();
     buf.push_str("\r\n");
-    buf.push_str(&format!("{GREEN}  _  __      _          {RESET}\r\n"));
-    buf.push_str(&format!("{GREEN} | |/ /     | |         {RESET}\r\n"));
-    buf.push_str(&format!("{GREEN} | ' / __ _ | | __ _   _ {RESET}\r\n"));
-    buf.push_str(&format!("{GREEN} |  < / _` || |/ /| | | |{RESET}\r\n"));
-    buf.push_str(&format!(
-        "{GREEN} | . \\ (_| ||   < | |_| |{RESET}  {PURPLE_BOLD}PowerShell AI Terminal{RESET}\r\n"
-    ));
-    buf.push_str(&format!(
-        "{GREEN} |_|\\_\\__,_||_|\\_\\ \\__,_|{RESET}  {GREEN}github.com/2233admin/kaku-shell{RESET}\r\n"
-    ));
+    buf.push_str(&format!("{PURPLE_BOLD}       /\\_/\\      {RESET}\r\n"));
+    buf.push_str(&format!("{PURPLE_BOLD}      ( ˶°ω°˶ )    {RESET} {GREEN}Kuku{RESET}\r\n"));
+    buf.push_str(&format!("{PURPLE_BOLD}      (/    \\)   {RESET} {GRAY}曼波~ 曼波曼波~{RESET}\r\n"));
+    buf.push_str(&format!("{PURPLE_BOLD}      /|    |\\   {RESET} {GREEN}github.com/2233admin/kuku{RESET}\r\n"));
+    buf.push_str(&format!("{PURPLE_BOLD}     (_|    |_)  {RESET}\r\n"));
     buf.push_str("\r\n");
 
     for (i, item) in MENU.iter().enumerate() {
@@ -122,7 +117,7 @@ fn render(selected: usize) -> anyhow::Result<()> {
     }
     buf.push_str("\r\n");
     buf.push_str(&format!(
-        "  {GRAY}arrows | Enter | 1-5 | Q quit{RESET}\r\n"
+        "  {GRAY}↑↓ 选择 · Enter 确认 · 1-5 快捷 · Q 退出{RESET}\r\n"
     ));
 
     out.write_all(buf.as_bytes())?;

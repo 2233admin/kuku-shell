@@ -1,64 +1,61 @@
-# Kaku Shell
+# Kuku
 
-A Rust CLI that turns PowerShell into an AI coding terminal.
+```
+       /\_/\
+      ( ˶°ω°˶ )   Kuku
+      (/    \)    你的 PowerShell AI 小助手~ 曼波曼波~
+      /|    |\
+     (_|    |_)
+```
 
-Failed command? Kaku auto-analyzes it with LLM, suggests a fix, and lets you apply it with Ctrl+Shift+E.
-
-## Features
-
-- **Auto Error Analysis** - Commands that fail are automatically sent to LLM for diagnosis
-- **Fix Suggestions** - Corrected command appears inline, press Ctrl+Shift+E to apply
-- **AI Config TUI** - Full terminal UI to manage model, API key, and connection
-- **Environment Doctor** - Diagnose PowerShell version, tools, and config health
-- **Non-invasive** - Injects a tiny managed block into `$PROFILE`, preserves your existing setup
-- **Zero dependencies** - Single static binary, no runtime needed
+命令打错了？Kuku 自动帮你分析报错、给出修复建议，Ctrl+Shift+E 一键应用。
 
 ## Quick Start
 
 ```powershell
-# Build from source
-cargo build --release --target x86_64-pc-windows-gnu
+# 初始化 PowerShell 集成
+kuku init
 
-# Initialize PowerShell integration
-kaku init
+# 设置 AI（交互式 TUI）
+kuku ai
 
-# Configure AI (interactive TUI)
-kaku ai
+# 自由提问
+kuku ask "怎么用 PowerShell 批量重命名文件"
 
-# Check environment health
-kaku doctor
+# 环境体检
+kuku doctor
 ```
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `kaku` | Interactive main menu |
-| `kaku ai` | AI assistant config TUI (model, key, test connection) |
-| `kaku assist` | Analyze failed command (called automatically by shell hook) |
-| `kaku doctor` | Diagnose environment and tool health |
-| `kaku init` | Inject integration into PowerShell `$PROFILE` |
-| `kaku config` | Edit `~/.config/kaku/kaku.toml` |
-| `kaku reset` | Remove integration from `$PROFILE` |
+| `kuku` | 交互式主菜单 |
+| `kuku ai` | AI 助手设置 TUI |
+| `kuku ask` | 自由提问 |
+| `kuku assist` | 分析失败命令（shell hook 自动调用） |
+| `kuku doctor` | 环境健康诊断 |
+| `kuku init` | 注入 PowerShell 集成 |
+| `kuku config` | 编辑 `~/.config/kuku/kuku.toml` |
+| `kuku reset` | 移除 PowerShell 集成 |
 
 ## How It Works
 
-1. `kaku init` adds a managed block to your PowerShell profile
-2. When a command fails (non-zero exit code), the shell hook calls `kaku assist`
-3. `kaku assist` sends the failed command + exit code to a configured LLM API
-4. The suggested fix is displayed and saved to a temp file
-5. Press **Ctrl+Shift+E** to insert the suggestion into your command line
+1. `kuku init` 往你的 PowerShell Profile 里加一段代码
+2. 命令失败时，shell hook 自动调用 `kuku assist`
+3. Kuku 把失败命令发给 AI，拿回修复建议
+4. 按 **Ctrl+Shift+E** 把建议填进命令行
 
 ## Configuration
 
-Config files live in `~/.config/kaku/`:
+配置文件在 `~/.config/kuku/`：
 
-- `assistant.toml` - AI model, API key, base URL
-- `kaku.toml` - General settings
+- `assistant.toml` - AI 模型、API key、base URL
+- `kuku.toml` - 通用设置
 
 ### Supported API Providers
 
-Any OpenAI-compatible `/v1/chat/completions` endpoint works:
+任何 OpenAI 兼容的 `/v1/chat/completions` 接口都行：
 
 - Volcengine (Doubao-Seed-2.0-Code, Doubao-Seed-2.0-pro)
 - DeepSeek (DeepSeek-V3.2)
@@ -68,11 +65,11 @@ Any OpenAI-compatible `/v1/chat/completions` endpoint works:
 
 ## Tech Stack
 
-- **Rust** - Single static binary (~3MB release)
+- **Rust** - Single static binary (~2.5MB)
 - **ratatui** + **crossterm** - Terminal UI
-- **reqwest** + **tokio** - Async HTTP client
-- **clap** - CLI argument parsing
-- **toml** / **serde** - Configuration
+- **reqwest** + **tokio** - Async HTTP
+- **clap** - CLI parsing
+- **toml** / **serde** - Config
 
 ## License
 

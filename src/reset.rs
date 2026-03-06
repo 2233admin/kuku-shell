@@ -23,12 +23,12 @@ pub fn run() -> anyhow::Result<()> {
         .with_context(|| format!("read {}", profile_path.display()))?;
 
     if !content.contains(profile::PROFILE_MARKER) {
-        println!("No kaku block found in {}. Nothing to reset.", profile_path.display());
+        println!("No kuku block found in {}. Nothing to reset.", profile_path.display());
         return Ok(());
     }
 
     if io::stdin().is_terminal() {
-        print!("Remove kaku integration from {}? [y/N] ", profile_path.display());
+        print!("呜呜...真的要赶走我吗...? [y/N] ");
         io::stdout().flush()?;
         let mut input = String::new();
         io::stdin().read_line(&mut input)?;
@@ -43,8 +43,8 @@ pub fn run() -> anyhow::Result<()> {
     fs::write(&profile_path, &cleaned)
         .with_context(|| format!("write {}", profile_path.display()))?;
 
-    println!("\x1b[32m✓\x1b[0m Removed kaku block from {}", profile_path.display());
-    println!("  Restart PowerShell or run: \x1b[1m. $PROFILE\x1b[0m");
+    println!("\x1b[32m✓\x1b[0m 好吧...那我走了...想我了就 kuku init 叫我回来...");
+    println!("  重启 PowerShell 或者跑一下: \x1b[1m. $PROFILE\x1b[0m");
     Ok(())
 }
 

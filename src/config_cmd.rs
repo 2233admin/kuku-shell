@@ -1,4 +1,4 @@
-//! Open kaku configuration file.
+//! Open kuku configuration file.
 
 use crate::profile;
 use anyhow::Context;

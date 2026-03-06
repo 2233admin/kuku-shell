@@ -28,7 +28,7 @@ impl AssistCommand {
         }
 
         if config.api_key.as_deref().filter(|k| !k.is_empty()).is_none() {
-            eprintln!("\x1b[33m[kaku] No API key configured. Run `kaku ai` to set up.\x1b[0m");
+            eprintln!("\x1b[33m[kuku] No API key configured. Run `kuku ai` to set up.\x1b[0m");
             return Ok(());
         }
 
@@ -58,10 +58,10 @@ impl AssistCommand {
         let suggestion = lines.next().unwrap_or("").trim();
 
         if !suggestion.is_empty() {
-            let temp = std::env::temp_dir().join("kaku_last_suggestion.txt");
+            let temp = std::env::temp_dir().join("kuku_last_suggestion.txt");
             let _ = std::fs::write(&temp, suggestion);
 
-            println!("\x1b[1;35m[kaku]\x1b[0m Suggested fix:");
+            println!("\x1b[1;35m[kuku]\x1b[0m 啊啊啊报错了！等等我看看！");
             println!("  \x1b[1;32m{suggestion}\x1b[0m");
 
             let explanation: String = lines.collect::<Vec<_>>().join("\n");
@@ -69,7 +69,7 @@ impl AssistCommand {
             if !explanation.is_empty() {
                 println!("  \x1b[90m{explanation}\x1b[0m");
             }
-            println!("  \x1b[90mPress Ctrl+Shift+E to apply\x1b[0m");
+            println!("  \x1b[90mCtrl+Shift+E 我帮你填上去！曼波~\x1b[0m");
         }
 
         Ok(())

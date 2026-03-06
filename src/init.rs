@@ -28,7 +28,7 @@ impl InitCommand {
             println!("  Created {}", assistant_path.display());
         }
 
-        // Ensure kaku.toml exists
+        // Ensure kuku.toml exists
         let config_path = profile::config_toml_path();
         if !config_path.exists() {
             fs::write(&config_path, default_config_toml())
@@ -44,7 +44,7 @@ impl InitCommand {
 
         if !self.update_only && io::stdin().is_terminal() {
             println!();
-            println!("Kaku will add integration to:");
+            println!("Kuku 要往这里加点东西：");
             println!("  {}", profile_path.display());
             print!("Continue? [Y/n] ");
             io::stdout().flush()?;
@@ -57,14 +57,14 @@ impl InitCommand {
             }
         }
 
-        // Resolve kaku executable path
-        let kaku_exe = std::env::current_exe()
-            .unwrap_or_else(|_| "kaku".into())
+        // Resolve kuku executable path
+        let kuku_exe = std::env::current_exe()
+            .unwrap_or_else(|_| "kuku".into())
             .display()
             .to_string()
             .replace('\\', "\\\\");
 
-        let block = profile::profile_block(&kaku_exe);
+        let block = profile::profile_block(&kuku_exe);
 
         // Read existing profile or create new
         if let Some(parent) = profile_path.parent() {
@@ -88,8 +88,9 @@ impl InitCommand {
         fs::write(&profile_path, &new_content)
             .with_context(|| format!("write {}", profile_path.display()))?;
 
-        println!("\x1b[32m✓\x1b[0m PowerShell profile updated: {}", profile_path.display());
-        println!("  Restart PowerShell or run: \x1b[1m. $PROFILE\x1b[0m");
+        println!("\x1b[32m✓\x1b[0m 钻进去了！哈基米~ Profile 已更新");
+        println!("  \x1b[90m{}\x1b[0m", profile_path.display());
+        println!("  重启 PowerShell 或者跑一下: \x1b[1m. $PROFILE\x1b[0m");
 
         if !self.update_only {
             println!();
@@ -129,7 +130,7 @@ fn replace_managed_block(content: &str, new_block: &str) -> String {
 }
 
 pub fn default_assistant_toml() -> &'static str {
-    r#"# Kaku Assistant configuration
+    r#"# Kuku Assistant configuration
 #
 # enabled: true enables command analysis suggestions
 # api_key: provider API key, example: "sk-xxxx"
@@ -145,7 +146,7 @@ base_url = "https://api.vivgrid.com/v1"
 }
 
 pub fn default_config_toml() -> &'static str {
-    r#"# Kaku Shell configuration
+    r#"# Kuku configuration
 
 [tools]
 # Uncomment and configure the tools you use:
@@ -158,10 +159,10 @@ pub fn default_config_toml() -> &'static str {
 }
 
 fn suggest_optional_tools() {
-    println!("Optional CLI tools for a better experience:");
-    println!("  \x1b[1mwinget install Starship.Starship\x1b[0m      # prompt");
-    println!("  \x1b[1mwinget install dandavison.delta\x1b[0m       # git diff");
-    println!("  \x1b[1mwinget install jesseduffield.lazygit\x1b[0m  # git TUI");
-    println!("  \x1b[1mwinget install sxyazi.yazi\x1b[0m            # file manager");
-    println!("  \x1b[1mwinget install ajeetdsouza.zoxide\x1b[0m     # smart cd");
+    println!("对了对了！这些也很好用！曼波推荐：");
+    println!("  \x1b[1mwinget install Starship.Starship\x1b[0m      \x1b[90m# prompt 变好看！\x1b[0m");
+    println!("  \x1b[1mwinget install dandavison.delta\x1b[0m       \x1b[90m# diff 有颜色了！\x1b[0m");
+    println!("  \x1b[1mwinget install jesseduffield.lazygit\x1b[0m  \x1b[90m# git 不用背命令\x1b[0m");
+    println!("  \x1b[1mwinget install sxyazi.yazi\x1b[0m            \x1b[90m# 文件管理超快的\x1b[0m");
+    println!("  \x1b[1mwinget install ajeetdsouza.zoxide\x1b[0m     \x1b[90m# cd 会记住路！\x1b[0m");
 }

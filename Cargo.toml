@@ -1,13 +1,13 @@
 [package]
-name = "kaku-shell"
+name = "kuku"
 version = "0.1.0"
 edition = "2021"
-description = "A fast CLI that turns PowerShell into an AI coding terminal"
+description = "你的 PowerShell AI 小助手~ 曼波曼波~"
 license = "MIT"
-repository = "https://github.com/2233admin/kaku-shell"
+repository = "https://github.com/2233admin/kuku"
 
 [[bin]]
-name = "kaku"
+name = "kuku"
 path = "src/main.rs"
 
 [dependencies]

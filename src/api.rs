@@ -72,7 +72,7 @@ pub fn save_config(config: &AssistantConfig) -> anyhow::Result<()> {
         std::fs::create_dir_all(parent)?;
     }
 
-    let mut content = String::from("# Kaku Assistant configuration\n\n");
+    let mut content = String::from("# Kuku Assistant configuration\n\n");
     content.push_str(&format!(
         "enabled = {}\n",
         config.enabled.unwrap_or(true)
@@ -105,6 +105,15 @@ pub async fn chat(
     config: &AssistantConfig,
     system_prompt: &str,
     user_msg: &str,
+) -> anyhow::Result<String> {
+    chat_with_tokens(config, system_prompt, user_msg, 512).await
+}
+
+pub async fn chat_with_tokens(
+    config: &AssistantConfig,
+    system_prompt: &str,
+    user_msg: &str,
+    max_tokens: u32,
 ) -> anyhow::Result<String> {
     let api_key = config
         .api_key
@@ -146,7 +155,7 @@ pub async fn chat(
                 content: user_msg.to_string(),
             },
         ],
-        max_tokens: 512,
+        max_tokens,
         temperature: 0.3,
     };
 

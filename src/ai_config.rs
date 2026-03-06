@@ -155,17 +155,17 @@ fn run_loop(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>, app: &mut App
                         Field::Model => app.cycle_model(true),
                         Field::ApiKey | Field::BaseUrl => app.start_edit(),
                         Field::Test => {
-                            app.status_msg = "Testing...".into();
+                            app.status_msg = "连接中...".into();
                             app.status_ok = true;
                             // Quick sync redraw
                             terminal.draw(|f| ui(f, app))?;
                             match test_connection(&app.config) {
                                 Ok(msg) => {
-                                    app.status_msg = format!("OK: {msg}");
+                                    app.status_msg = format!("连上了！曼波！{msg}");
                                     app.status_ok = true;
                                 }
                                 Err(e) => {
-                                    app.status_msg = format!("FAIL: {e:#}");
+                                    app.status_msg = format!("呜...连不上...{e:#}");
                                     app.status_ok = false;
                                 }
                             }
@@ -173,11 +173,11 @@ fn run_loop(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>, app: &mut App
                         Field::Save => {
                             match api::save_config(&app.config) {
                                 Ok(()) => {
-                                    app.status_msg = "Saved!".into();
+                                    app.status_msg = "存好了！曼波曼波~".into();
                                     app.status_ok = true;
                                 }
                                 Err(e) => {
-                                    app.status_msg = format!("Save failed: {e:#}");
+                                    app.status_msg = format!("存不了呜呜...{e:#}");
                                     app.status_ok = false;
                                 }
                             }
@@ -213,7 +213,7 @@ fn ui(f: &mut Frame, app: &App) {
         .split(area);
 
     // Title
-    let title = Paragraph::new("Kaku AI Assistant Configuration")
+    let title = Paragraph::new("Kuku AI 设置 ~ 曼波曼波 ~")
         .style(Style::default().fg(Color::Magenta).add_modifier(Modifier::BOLD))
         .alignment(Alignment::Center);
     f.render_widget(title, chunks[0]);
@@ -319,9 +319,9 @@ fn ui(f: &mut Frame, app: &App) {
 
     // Help
     let help_text = if app.editing {
-        "Enter: confirm | Esc: cancel | type to edit"
+        "Enter 确认 · Esc 取消 · 直接敲~"
     } else {
-        "arrows/jk: navigate | Enter/Space: edit | </>: cycle model | q: quit"
+        "↑↓ 移动 · Enter 编辑 · ←→ 换模型 · Q 溜了溜了~"
     };
     let help = Paragraph::new(help_text)
         .style(Style::default().fg(Color::DarkGray))

@@ -4,6 +4,7 @@ use std::io::IsTerminal;
 
 mod ai_config;
 mod api;
+mod ask;
 mod assist;
 mod config_cmd;
 mod doctor;
@@ -15,8 +16,8 @@ mod tui_core;
 
 #[derive(Debug, Parser)]
 #[command(
-    name = "kaku",
-    about = "Kaku Shell - Turn PowerShell into an AI coding terminal",
+    name = "kuku",
+    about = "Kuku - 你的 PowerShell AI 小助手~ 曼波曼波~",
     version
 )]
 pub struct Opt {
@@ -29,10 +30,13 @@ pub enum SubCommand {
     #[command(about = "Manage AI assistant and coding tools configuration")]
     Ai,
 
+    #[command(about = "Ask AI a question")]
+    Ask(ask::AskCommand),
+
     #[command(about = "Analyze a failed command and suggest a fix")]
     Assist(assist::AssistCommand),
 
-    #[command(about = "Open kaku configuration")]
+    #[command(about = "Open kuku configuration")]
     Config,
 
     #[command(about = "Diagnose shell environment and tool health")]
@@ -68,6 +72,7 @@ fn run() -> anyhow::Result<()> {
 
     match cmd {
         SubCommand::Ai => ai_config::run().context("ai config"),
+        SubCommand::Ask(cmd) => cmd.run().context("ask"),
         SubCommand::Assist(cmd) => cmd.run().context("assist"),
         SubCommand::Config => config_cmd::run().context("config"),
         SubCommand::Doctor => doctor::run().context("doctor"),

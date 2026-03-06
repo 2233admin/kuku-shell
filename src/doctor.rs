@@ -31,7 +31,7 @@ impl Status {
 }
 
 pub fn run() -> anyhow::Result<()> {
-    println!("\x1b[1mKaku Doctor\x1b[0m\n");
+    println!("\x1b[1;35mKuku Doctor\x1b[0m  \x1b[90m闻闻~ 嗅嗅~ 让我检查一下！\x1b[0m\n");
 
     let checks = vec![
         check_powershell(),
@@ -63,6 +63,13 @@ pub fn run() -> anyhow::Result<()> {
     }
 
     println!();
+    if fail == 0 && warn == 0 {
+        println!("  \x1b[32m曼波！全部没问题！你好棒！\x1b[0m");
+    } else if fail == 0 {
+        println!("  \x1b[33m基本OK~ 就 {warn} 个小事情啦\x1b[0m");
+    } else {
+        println!("  \x1b[31m呜呜呜 {fail} 个地方坏掉了...别担心我帮你！\x1b[0m");
+    }
     println!("  {ok} ok  {warn} warn  {fail} fail");
     std::io::stdout().flush()?;
     Ok(())
@@ -105,7 +112,7 @@ fn check_profile_integration() -> Check {
                 name: "Profile Integration",
                 status: Status::Warn,
                 detail: "Cannot determine PowerShell profile path".into(),
-                fix: Some("Run `kaku init`".into()),
+                fix: Some("Run `kuku init`".into()),
             }
         }
     };
@@ -115,7 +122,7 @@ fn check_profile_integration() -> Check {
             name: "Profile Integration",
             status: Status::Warn,
             detail: format!("Profile not found: {}", path.display()),
-            fix: Some("Run `kaku init`".into()),
+            fix: Some("Run `kuku init`".into()),
         };
     }
 
@@ -124,15 +131,15 @@ fn check_profile_integration() -> Check {
         Check {
             name: "Profile Integration",
             status: Status::Ok,
-            detail: format!("Kaku block found in {}", path.display()),
+            detail: format!("Kuku block found in {}", path.display()),
             fix: None,
         }
     } else {
         Check {
             name: "Profile Integration",
             status: Status::Warn,
-            detail: format!("No kaku block in {}", path.display()),
-            fix: Some("Run `kaku init`".into()),
+            detail: format!("No kuku block in {}", path.display()),
+            fix: Some("Run `kuku init`".into()),
         }
     }
 }
@@ -144,7 +151,7 @@ fn check_assistant_config() -> Check {
             name: "AI Assistant Config",
             status: Status::Warn,
             detail: format!("Missing {}", path.display()),
-            fix: Some("Run `kaku ai` to configure".into()),
+            fix: Some("Run `kuku ai` to configure".into()),
         };
     }
 
@@ -166,7 +173,7 @@ fn check_assistant_config() -> Check {
             name: "AI Assistant Config",
             status: Status::Warn,
             detail: "API key not set".into(),
-            fix: Some("Run `kaku ai` to set API key".into()),
+            fix: Some("Run `kuku ai` to set API key".into()),
         }
     }
 }
