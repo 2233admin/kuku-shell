@@ -1,58 +1,110 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,14,16,18,20&height=200&section=header&text=Kuku%20Shell&fontSize=60&fontColor=fff&animation=fadeIn&fontAlignY=35&desc=%E4%BD%A0%E7%9A%84%20PowerShell%20AI%20%E5%B0%8F%E5%8A%A9%E6%89%8B~%20%E6%9B%BC%E6%B3%A2%E6%9B%BC%E6%B3%A2~&descSize=16&descAlignY=55" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,14,16,18,20&height=180&section=header&text=&fontSize=1" />
 </p>
+
+<h1 align="center">
+  <br>
+  <code>( ˶°ω°˶ )</code>
+  <br>
+  Kuku Shell
+  <br>
+</h1>
+
+<h3 align="center">
+  命令翻车了？别慌。<br>
+  Kuku 2 秒给你修好。曼波~
+</h3>
+
+<p align="center">
+  <strong>PowerShell 命令写错 → AI 自动分析 → 一键修复</strong><br>
+  <sub>2.5MB 单文件 · 零依赖 · 比你打开浏览器搜索快 10 倍</sub>
+</p>
+
+<br>
 
 <p align="center">
   <a href="https://github.com/2233admin/kuku/actions"><img src="https://img.shields.io/github/actions/workflow/status/2233admin/kuku/ci.yml?style=flat-square&logo=github&label=build&color=8B5CF6" /></a>
   <a href="https://github.com/2233admin/kuku/releases"><img src="https://img.shields.io/github/v/release/2233admin/kuku?style=flat-square&color=EC4899&label=release" /></a>
+  <img src="https://img.shields.io/badge/binary-2.5MB-10B981?style=flat-square" />
   <img src="https://img.shields.io/badge/platform-Windows-0EA5E9?style=flat-square&logo=windows" />
   <img src="https://img.shields.io/badge/lang-Rust-F97316?style=flat-square&logo=rust" />
-  <img src="https://img.shields.io/github/license/2233admin/kuku?style=flat-square&color=10B981" />
   <img src="https://img.shields.io/badge/vibe-曼波曼波-FF6B9D?style=flat-square" />
 </p>
 
 <br>
 
-<div align="center">
+<!-- TODO: 录一段终端 GIF 放这里，效果直接炸裂 -->
+<!-- <p align="center"><img src="./assets/demo.gif" width="700" /></p> -->
 
-```
-       /\_/\
-      ( ˶°ω°˶ )    命令翻车了？
-      (/    \)     Kuku 自动分析、给出修复
-      /|    |\     Ctrl+Shift+E 一键应用
-     (_|    |_)    曼波~
-```
-
-</div>
+<p align="center">
+  <sub>⬆️ GIF demo coming soon — 命令翻车 → Kuku 修复 → Ctrl+Shift+E 应用</sub>
+</p>
 
 <br>
 
-## ✨ Features
+## 为什么用 Kuku？
+
+> **你现在**：命令报错 → 复制错误信息 → 打开浏览器 → 搜索 → 翻 Stack Overflow → 复制答案 → 粘贴回来
+>
+> **用 Kuku**：命令报错 → Kuku 弹出修复建议 → 按 `Ctrl+Shift+E` → 搞定
+>
+> **省掉的时间**：30 秒 → 2 秒。每天省 50 次，一年省回一个假期。
+
+<br>
+
+## 30 秒上手
+
+```powershell
+# 1. 让 Kuku 钻进你的 PowerShell
+kuku init
+
+# 2. 填上 API key
+kuku ai
+
+# 3. 没了。故意打错一条命令试试
+gti status
+# [kuku] 啊啊啊报错了！等等我看看！
+#   git status
+#   Ctrl+Shift+E 我帮你填上去！曼波~
+```
+
+<br>
+
+## ✨ 能干嘛
 
 <table>
 <tr>
-<td width="50%">
+<td width="50%" valign="top">
 
-### 🐱 AI 错误分析
-命令失败？Kuku 自动闻闻出了什么问题，给你建议修复命令
+### 🔥 自动修命令
+打错命令？Kuku 自动拦截、分析、给修复建议。你只管按 `Ctrl+Shift+E`。
 
-### 🎯 一键应用
-按 `Ctrl+Shift+E` 把建议填进命令行，不用自己打字
-
-### 💬 自由提问
-`kuku ask "任何问题"` 直接问 AI，不用等命令出错
-
-</td>
-<td width="50%">
-
-### 🎨 TUI 配置面板
-`kuku ai` 打开交互式设置界面，模型、密钥、连接测试一站搞定
+### 💬 随便问
+```
+kuku ask "PowerShell 怎么批量改文件名"
+```
+不用等命令出错也能问。2048 token，回答够长。
 
 ### 🩺 环境体检
-`kuku doctor` 帮你闻闻嗅嗅，检查 PowerShell、工具链、API 配置
+```
+kuku doctor
+```
+闻闻嗅嗅你的环境，PowerShell 版本、工具链、API 配置一目了然。
 
-### 🪶 零依赖
-单个 ~2.5MB 静态二进制，不需要任何运行时
+</td>
+<td width="50%" valign="top">
+
+### 🎨 设置面板
+```
+kuku ai
+```
+全键盘操作的 TUI，切模型、填密钥、测连接，不用手改配置文件。
+
+### 🪶 就一个文件
+2.5MB。不装 Python，不装 Node，不装运行时。丢进 PATH 就能用。
+
+### 🐱 有性格
+不是冷冰冰的工具。Kuku 会说"啊啊啊报错了！"、"想到了！曼波！"、"呜呜...要赶走我吗"。
 
 </td>
 </tr>
@@ -60,76 +112,63 @@
 
 <br>
 
-## 🚀 Quick Start
+## 📋 所有命令
 
-```powershell
-# 让 Kuku 钻进你的 PowerShell
-kuku init
-
-# 设置 AI（交互式 TUI）
-kuku ai
-
-# 自由提问
-kuku ask "怎么用 PowerShell 批量重命名文件"
-
-# 环境体检
-kuku doctor
-```
+| 命令 | 干嘛的 |
+|:-----|:-------|
+| `kuku` | 打开主菜单，曼波~ |
+| `kuku ask <问题>` | 自由提问 |
+| `kuku ai` | AI 设置面板 (TUI) |
+| `kuku doctor` | 环境体检 |
+| `kuku init` | 装进 PowerShell |
+| `kuku reset` | 拆掉（呜呜...想我了就 `kuku init` 叫我回来） |
+| `kuku config` | 打开配置文件 |
+| `kuku assist` | 分析失败命令（自动调用，你不用管） |
 
 <br>
 
-## 📋 Commands
-
-| Command | What it does |
-|:--------|:-------------|
-| `kuku` | 交互式主菜单 · 曼波~ |
-| `kuku ai` | AI 助手设置 TUI |
-| `kuku ask <问题>` | 自由提问，啥都能问 |
-| `kuku assist` | 分析失败命令（shell hook 自动调用） |
-| `kuku doctor` | 闻闻嗅嗅环境体检 |
-| `kuku init` | 注入 PowerShell 集成 |
-| `kuku config` | 编辑 `~/.config/kuku/kuku.toml` |
-| `kuku reset` | 移除集成（呜呜...） |
-
-<br>
-
-## 🔧 How It Works
+## 🔧 原理
 
 ```
-  你打了一条命令        命令炸了 💥        Kuku 自动分析
- ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
- │ git psh      │───>│ exit code 1  │───>│ kuku assist  │
- └──────────────┘    └──────────────┘    └──────┬───────┘
-                                                │
-                      Ctrl+Shift+E              v
-                     ┌──────────────┐    ┌──────────────┐
-                     │ git push     │<───│ 建议: git    │
-                     │ (已填入)      │    │ push         │
-                     └──────────────┘    └──────────────┘
+  你：gti status          PowerShell：报错！        Kuku：让我看看！
+ ┌──────────────┐       ┌──────────────┐       ┌──────────────┐
+ │   gti status │──────>│  exit code 1 │──────>│  kuku assist │
+ └──────────────┘       └──────────────┘       └──────┬───────┘
+                                                      │ 问 AI
+                                                      v
+                    你按 Ctrl+Shift+E           ┌──────────────┐
+                   ┌──────────────┐             │  建议:       │
+                   │  git status  │<────────────│  git status  │
+                   │  (自动填入)   │             └──────────────┘
+                   └──────────────┘
 ```
 
-1. `kuku init` 往你的 PowerShell Profile 里加一段代码
-2. 命令失败时，shell hook 自动调用 `kuku assist`
-3. Kuku 把失败命令发给 AI，拿回修复建议
-4. 按 **Ctrl+Shift+E** 把建议填进命令行
+**就四步：**
+1. `kuku init` — Kuku 往你的 `$PROFILE` 里加一小段 hook
+2. 你正常用 PowerShell，命令失败时 hook 自动触发
+3. Kuku 把报错发给 AI，拿回修复建议
+4. `Ctrl+Shift+E` 一键填进命令行
+
+**不侵入**：不改你的 Prompt、不影响现有配置、`kuku reset` 一键还原。
 
 <br>
 
-## 🌐 Supported API Providers
+## 🌐 支持的 AI
 
-任何 OpenAI 兼容的 `/v1/chat/completions` 接口都行：
+任何兼容 OpenAI `/v1/chat/completions` 的接口：
 
-| Provider | Models |
-|:---------|:-------|
-| Volcengine | `Doubao-Seed-2.0-Code` · `Doubao-Seed-2.0-pro` |
-| DeepSeek | `DeepSeek-V3.2` |
-| MiniMax | `MiniMax-M2.5` |
-| Zhipu | `GLM-4.7` |
-| OpenAI / Anthropic (proxy) | Any compatible model |
+| 厂商 | 推荐模型 | 说明 |
+|:-----|:---------|:-----|
+| **Volcengine** | `Doubao-Seed-2.0-Code` | 默认，字节跳动，写代码专用 |
+| **DeepSeek** | `DeepSeek-V3.2` | 便宜好用 |
+| **MiniMax** | `MiniMax-M2.5` | 白嫖额度多 |
+| **Zhipu** | `GLM-4.7` | 智谱 |
+| **OpenAI** | `gpt-4o` | 通过官方或代理 |
+| **任意兼容网关** | — | 只要是 `/v1/chat/completions` 就行 |
 
 <br>
 
-## 🏗️ Tech Stack
+## 🏗️ 技术栈
 
 <p>
   <img src="https://img.shields.io/badge/Rust-000?style=for-the-badge&logo=rust&logoColor=white" />
@@ -139,29 +178,53 @@ kuku doctor
   <img src="https://img.shields.io/badge/reqwest-HTTP-0EA5E9?style=for-the-badge" />
 </p>
 
-- **Rust** — 单个静态二进制 ~2.5MB
-- **ratatui** + **crossterm** — Terminal UI
-- **reqwest** + **tokio** — 异步 HTTP
-- **clap** — CLI 解析
-- **toml** / **serde** — 配置
+| 组件 | 干嘛的 |
+|:-----|:-------|
+| Rust | 编译成 2.5MB 单文件，启动 <10ms |
+| ratatui + crossterm | TUI 界面（`kuku ai` 设置面板） |
+| reqwest + tokio | 异步调 AI API |
+| clap | 命令行解析 |
+| toml + serde | 读写配置 |
 
 <br>
 
-## 📁 Configuration
-
-配置文件在 `~/.config/kuku/`：
+## 📁 配置
 
 ```
 ~/.config/kuku/
-├── assistant.toml    # AI 模型、API key、base URL
+├── assistant.toml    # API key、模型、base URL
 └── kuku.toml         # 通用设置
 ```
+
+<details>
+<summary><b>assistant.toml 长这样</b></summary>
+
+```toml
+enabled = true
+api_key = "your-api-key"
+model = "Doubao-Seed-2.0-Code"
+base_url = "https://ark.cn-beijing.volces.com/api/coding/v1"
+```
+
+</details>
+
+<br>
+
+## 🤝 Contributing
+
+欢迎 PR！不管是修 bug、加功能、还是让 Kuku 说更多可爱的话。
 
 <br>
 
 ## 📜 License
 
-MIT
+MIT — 随便用，Kuku 不介意~
+
+<p align="center">
+  <br>
+  <code>( ˶°ω°˶ ) 曼波~ 用得开心的话给个 ⭐ 吧！</code>
+  <br><br>
+</p>
 
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,14,16,18,20&height=100&section=footer" />
